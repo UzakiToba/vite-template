@@ -1,0 +1,19 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "ignorePaths": ["node_modules/**", "cspell.json"],
+  "dictionaries": [
+    "typescript",
+    "node",
+    "npm",
+    "html",
+    "docker",
+    "css"
+  ],
+  "words": [
+    "cspell"
+  ],
+  "flagWords": [
+    "hte"
+  ]
+}

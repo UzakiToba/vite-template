@@ -14,8 +14,11 @@
     "lint:style:fix": "stylelint --fix \"src/**/*.{css,scss}\"",
     "lint": "run-s lint:es lint:style",
     "lint:fix": "run-s format lint:es:fix lint:style:fix",
+    "tsc": "tsc --noEmit",
+    "cspell": "cspell \"src/**/*.{js,jsx,ts,tsx,css,scss}\"",
     "preinstall": "npx typesync || :",
-    "prepare": "npx simple-git-hooks || :"
+    "prepare": "npx simple-git-hooks || :",
+    "pre-push": "run-p tsc"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -26,6 +29,7 @@
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@vitejs/plugin-react": "^2.1.0",
+    "cspell": "^6.12.0",
     "eslint": "^8.25.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
@@ -52,16 +56,20 @@
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [
       "prettier --write --loglevel=warn",
-      "eslint --fix"
+      "eslint --fix",
+      "cspell"
     ],
     "src/**/*.{css,scss}": [
-      "stylelint --fix"
+      "stylelint --fix",
+      "cspell"
     ],
     "src/**/*.{html,json,gql,graphql}": [
-      "prettier --write --loglovel=warn"
+      "prettier --write --loglovel=warn",
+      "cspell"
     ]
   },
   "simple-git-hooks": {
-    "pre-commit": "npx lint-staged"
+    "pre-commit": "npx lint-staged",
+    "pre-push": "npm run pre-push"
   }
 }
