@@ -1,0 +1,132 @@
+name: PR check
+run-name: 'lint check PR #${{ github.ref_name }} ${{ github.head_ref }} -> ${{ github.base_ref }}'
+on:
+  pull_request:
+    branches:
+      - '**'
+  push:
+    branches:
+      - 'main'
+      - 'develop'
+
+jobs:
+  Tsc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v3
+
+      # node_modules がキャッシュされていれば展開する
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      # node_modules がキャッシュされてなければ npm ci
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: npm ci
+        run: npm ci
+
+      - name: type check
+        run: npm run tsc
+
+  Lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    needs: Tsc
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: npm ci
+        run: npm ci
+
+      - name: eslint
+        run: npm run lint:es
+
+  Prettier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    needs: Tsc
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: npm ci
+        run: npm ci
+
+      - name: prettier
+        run: npm run prettier:check
+
+  StyleLint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    needs: Tsc
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: npm ci
+        run: npm ci
+
+      - name: stylelint
+        run: npm run lint:style
