@@ -1,3 +1,4 @@
+# 1
 name: Create a release pull request
 
 on:
@@ -22,5 +23,34 @@ jobs:
       - name: Get previous tag
         id: pre_tag
         run: |
-          echo "::set-output name=pre_tag::$(curl -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .tag_name)"
+          echo "pre_tag=$(curl -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .tag_name)" >> $GITHUB_ENV
 
+      # タグを生成する
+      # awk -F'-' '{print $1}' - を区切りとして分割して最初のレコードを取り出してる
+      - name: Generate release tag
+        id: release_tag
+        run: |
+          today=$(date +'%Y.%m.%d')
+          pre_release_date=$(echo ${{ env.pre_tag }} | awk -F'-' '{print $1}')
+          pre_release_count=$(echo ${{ steps.pre_tag.outputs.pre_tag }} | awk -F'-' '{print $2}')
+          
+          if [[ ! $pre_release_date = $today ]]; then
+            echo "init count"
+            pre_release_count=0
+          fi
+          
+          echo "release_tag=$today-$(($pre_release_count + 1))" >> $GITHUB_ENV
+
+      - name: Generate release note
+        id: release_note
+        run: |
+          echo "release_note=$(curl -X POST -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/${{ github.repository }}/releases/generate-notes -d '{"tag_name":"${{ env.release_tag }}", "previous_tag_name":"${{ env.pre_tag }}"}' | jq .body | sed 's/"//g')" >> $GITHUB_ENV
+
+
+      - run: echo ${{env.release_note}}
+
+      # リリースノート本文作る
+#      - name: Generate release note
+#        id: release_note
+#        run: |
+#          echo "release_note=$(curl -X POST -H 'Accept: application/vnd.github.v3+json' -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/${{ github.repository }}/releases/generate-notes -d '{"tag_name":"${{ steps.release_tag.outputs.release_tag }}", "previous_tag_name":"${{ steps.pre_tag.outputs.pre_tag }}"}' | jq .body | sed 's/"//g')"
