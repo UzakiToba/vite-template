@@ -1,5 +1,6 @@
 name: Create a release pull request
-run -name: Create a release pull request
+
+run-name: Create a release pull request
 
 on:
   push:
