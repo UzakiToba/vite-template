@@ -1,13 +1,11 @@
 name: PR check
-run-name: 'lint check PR #${{ github.ref_name }} ${{ github.head_ref }} -> ${{ github.base_ref }}'
+run-name: "Pre-checking PR #${{ github.ref_name }} ${{ github.head_ref }} -> ${{ github.base_ref }}"
+
 on:
   pull_request:
     branches:
       - '**'
-  push:
-    branches:
-      - 'main'
-      - 'develop'
+    types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
   Tsc:
