@@ -4,17 +4,28 @@ changelog:
     authors:
       - renovate
   categories:
-    # 新機能
-    - title: 💎 Features
+    # 機能追加、改善、改修
+    - title: 💎 Enhancements
       labels:
-        - "feature"
-    # 機能改善、改修
-    - title: 💊 Enhancements
-      labels:
-        - "enhancement"
+        - enhancement
+    # バグフィックス
     - title: 🐛 Bug Fix
       labels:
-        - "bug"
+        - bug
+    # CIやtest、リファクタリング、ビルド周りの整備等
+    - title: Maintenance
+      labels:
+        - ci
+        - test
+        - refactoring
+        - performance
+    # ドキュメントの改善または追加
+    - title: Documentation
+      labels:
+        - documentation
+    - title: Breaking changes
+      labels:
+        - breaking change
     - title: 🖋️ Other Changes
       labels:
-        - "*"
+        - '*'

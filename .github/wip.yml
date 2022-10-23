@@ -1,0 +1,11 @@
+locations:
+  - title
+  - label_name
+  - commit_subject
+terms:
+  - do not merge
+  - ⛔
+  - 13_wip
+  - wip
+  - work in progress
+  - 🚧
