@@ -23,9 +23,6 @@ changelog:
     - title: Documentation
       labels:
         - documentation
-    - title: Breaking changes
-      labels:
-        - breaking change
     - title: 🖋️ Other Changes
       labels:
         - '*'
