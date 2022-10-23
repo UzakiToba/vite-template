@@ -7,14 +7,14 @@ changelog:
     # 新機能
     - title: 💎 Features
       labels:
-        - feature
+        - "feature"
     # 機能改善、改修
     - title: 💊 Enhancements
       labels:
-        - enhancement
+        - "enhancement"
     - title: 🐛 Bug Fix
       labels:
-        - bug
+        - "bug"
     - title: 🖋️ Other Changes
       labels:
-        - *
+        - "*"
