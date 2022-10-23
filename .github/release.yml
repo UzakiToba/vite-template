@@ -1,7 +1,8 @@
 changelog:
   # リリースノートから除外したいユーザー
-  authors:
-    - renovate
+  exclude:
+    authors:
+      - renovate
   categories:
     # 新機能
     - title: 💎 Features
