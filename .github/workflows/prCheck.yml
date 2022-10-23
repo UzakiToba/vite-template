@@ -1,5 +1,5 @@
 name: PR check
-run-name: Pre-checking PR #${{ github.ref_name }} ${{ github.head_ref }} -> ${{ github.base_ref }}
+run-name: 'Pre-checking PR #${{ github.ref_name }} ${{ github.head_ref }} -> ${{ github.base_ref }}'
 
 on:
   pull_request:
