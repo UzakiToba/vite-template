@@ -1,0 +1,19 @@
+changelog:
+  # リリースノートから除外したいユーザー
+  authors:
+    - renovate
+  categories:
+    # 新機能
+    - title: 💎 Features
+      labels:
+        - feature
+    # 機能改善、改修
+    - title: 💊 Enhancements
+      labels:
+        - enhancement
+    - title: 🐛 Bug Fix
+      labels:
+        - bug
+    - title: 🖋️ Other Changes
+      labels:
+        - *
