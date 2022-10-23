@@ -1,11 +1,14 @@
 name: PR check
-run-name: "Pre-checking PR #${{ github.ref_name }} ${{ github.head_ref }} -> ${{ github.base_ref }}"
+run-name: Pre-checking PR #${{ github.ref_name }} ${{ github.head_ref }} -> ${{ github.base_ref }}
 
 on:
   pull_request:
     branches:
       - '**'
     types: [opened, synchronize, reopened, ready_for_review]
+
+env:
+  NODE_VERSION: 16
 
 jobs:
   Tsc:
@@ -30,7 +33,7 @@ jobs:
         name: node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: $NODE_VERSION
 
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
         name: npm ci
@@ -60,7 +63,7 @@ jobs:
         name: node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: $NODE_VERSION
 
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
         name: npm ci
@@ -90,7 +93,7 @@ jobs:
         name: node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: $NODE_VERSION
 
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
         name: npm ci
@@ -120,7 +123,7 @@ jobs:
         name: node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: $NODE_VERSION
 
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
         name: npm ci
