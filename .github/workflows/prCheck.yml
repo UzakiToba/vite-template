@@ -14,6 +14,7 @@ jobs:
   Tsc:
     runs-on: ubuntu-latest
     timeout-minutes: 2
+    if: ${{ !github.event.pull_request.draft }}
     steps:
       - uses: actions/checkout@v3
 
