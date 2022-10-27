@@ -3,26 +3,29 @@ changelog:
   exclude:
     authors:
       - renovate
+    labels:
+      - 🚫Ignore for release note
   categories:
-    # 機能追加、改善、改修
-    - title: 💎 Enhancements
-      labels:
-        - enhancement
+    # 機能追加
+    - title: ✨ New Features
+      labels: '🔑Type: Feature✨'
     # バグフィックス
-    - title: 🐛 Bug Fix
+    - title: 🐛 Bug Fixes
       labels:
-        - bug
+        - '🔑Type: Bug🐛'
+    # パフォーマンス改善
+    - title: 💹 Performance
+      labels:
+        - '🔑Type: Performance💹'
+    # 破壊的変更
+    - title: ⚠️Breaking Changes
     # CIやtest、リファクタリング、ビルド周りの整備等
-    - title: Maintenance
+    - title: 🔧 Maintenances
       labels:
-        - ci
-        - test
-        - refactoring
-        - performance
-    # ドキュメントの改善または追加
-    - title: Documentation
-      labels:
-        - documentation
+        - '🔑Type: Document📝'
+        - '🔑Type: Test💡'
+        - '🔑Type: Refactoring♻️'
+        - '🔑Type: Maintenance🔧'
     - title: 🖋️ Other Changes
       labels:
         - '*'
