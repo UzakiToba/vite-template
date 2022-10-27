@@ -1,0 +1,34 @@
+name: Auto PR check comment
+run-name: Auto PR check comment
+
+on:
+  pull_request:
+    branches:
+      - '**'
+    #  synchronize はあとで消す
+    types: [opened, synchronize, ready_for_review]
+
+jobs:
+  auto-comment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    if: ${{ !github.event.pull_request.draft }}
+    steps:
+      - name: post comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## PR作成手引
+            新規のPRには必ず以下のlabelを設定してください  
+            **これらのlabelを重複して設定しないでください**
+            - 👑Priority
+              - 優先度です。  基本は `👑Priority: Medium🚊` を設定してください
+            - 🚥Status
+              - PRの状態です。  `🚥Status: Review Needed👀` を設定しないとレビューは開始されません
+            
+            また以下のlabelの設定を強く推奨します  
+            **このlabelを重複して設定しないでください**
+            - 🔑Type
+              - このlabelをもとにリリースノートを作成します。  なにもつけなかった場合はすべて **Other Changes** としてリストアップされます。  もしリリースノートに記載したくない特殊なケースの場合は、`🚫Ignore for release note` labelを設定すると、リリースノートに記載されません
