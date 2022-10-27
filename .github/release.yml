@@ -1,8 +1,9 @@
 changelog:
-  # リリースノートから除外したいユーザー
   exclude:
+    # 除外したいユーザー
     authors:
       - renovate
+    # 除外したいlabel
     labels:
       - 🚫Ignore for release note
   categories:
