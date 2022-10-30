@@ -10,9 +10,25 @@ jobs:
   label:
     runs-on: ubuntu-latest
     timeout-minutes: 2
-
     steps:
-      - uses: andymckay/labeler@master
-        with:
-          add-labels: '👑Priority: Medium🚊, 🚥Status: WIP🚧'
+      - name: is priority
+        id: is_priority
+        run: |
+          isLabel=$( echo ${{ contains(toJson(github.event.pull_request.labels.*.name), 'Priority:') }})
+          echo "is_priority=$isLabel" >> $GITHUB_ENV
 
+      - name: is status
+        id: is_status
+        run: |
+          isLabel=$( echo ${{ contains(toJson(github.event.pull_request.labels.*.name), 'Status:') }})
+          echo "is_status=$isLabel" >> $GITHUB_ENV
+
+      - if: ${{ !startsWith(env.is_priority, true) }}
+        uses: andymckay/labeler@master
+        with:
+          add-labels: '👑Priority: Medium🚊'
+
+      - if: ${{ !startsWith(env.is_status, true) }}
+        uses: andymckay/labeler@master
+        with:
+          add-labels: '🚥Status: WIP🚧'
