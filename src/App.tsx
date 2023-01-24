@@ -1,5 +1,7 @@
 import reactLogo from './assets/react.svg';
 import './App.css';
+// import { D3js } from "./D31/d3js";
+// import { D3js2 } from './D32/index.tsx';
 
 const title = import.meta.env.VITE_APP_TITLE;
 
@@ -15,6 +17,8 @@ export const App = () => {
         </a>
       </div>
       <h1>{title}</h1>
+      {/* <D3js /> */}
+      {/* <D3js2 /> */}
     </div>
   );
 };

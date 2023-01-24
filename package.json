@@ -22,10 +22,13 @@
     "pre-push": "run-p tsc"
   },
   "dependencies": {
+    "d3": "^7.8.0",
+    "dayjs": "^1.11.7",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/d3": "^7.4.0",
     "@types/eslint": "8.4.7",
     "@types/prettier": "2.7.1",
     "@types/react": "18.0.21",
